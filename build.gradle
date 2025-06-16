@@ -1,0 +1,87 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.joaquinonsoft.importssdui'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Project Lombok » 1.18.38
+    // Lombok is a Java library that provides annotations to simplify Java development by automating
+    // the generation of boilerplate code. Key features include automatic generation of getters, setters,
+    // equals, hashCode, and toString methods, as well as a facility for automatic resource management.
+    // It aims to reduce the amount of manual coding, thereby streamlining the codebase and reducing
+    // potential for errors.
+    //
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+
+    // Apache Commons IO » 2.19.0
+    //
+    // The Apache Commons IO library contains utility classes, stream
+    // implementations, file filters, file comparators, endian transformation
+    // classes, and much more.
+    //
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation 'commons-io:commons-io:2.19.0'
+
+    // Apache Log4j Core » 3.0.0-beta3
+    // Implementation for Apache Log4J, a highly configurable logging tool that
+    // focuses on performance and low garbage generation. It has a plugin architecture
+    // that makes it extensible and supports asynchronous logging based on LMAX Disruptor.
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation 'org.apache.logging.log4j:log4j-core:3.0.0-beta3'
+
+    // Apache Commons CLI » 1.9.0
+    // Apache Commons CLI provides a simple API for presenting, processing, and
+    // validating a Command Line Interface.
+    //
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    implementation 'commons-cli:commons-cli:1.9.0'
+
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.20.1'
+
+    // Jsoup Java HTML Parser » 1.20.1
+    // jsoup is a Java library that simplifies working with real-world HTML and XML.
+    // It offers an easy-to-use API for URL fetching, data parsing, extraction, and
+    // manipulation using DOM API methods, CSS, and xpath selectors. jsoup implements
+    // the WHATWG HTML5 specification, and parses HTML to the same DOM as modern browsers.
+    //
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    implementation 'commons-cli:commons-cli:1.9.0'
+
+    // Apache POI Common » 5.4.1
+    // Apache POI - Java API To Access Microsoft Format Files
+    //
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+    implementation 'org.apache.poi:poi:5.4.1'
+
+    // Apache POI API Based On OPC and OOXML Schemas » 5.4.1
+    // Apache POI - Java API To Access Microsoft Format Files
+    //
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    implementation 'org.apache.poi:poi-ooxml:5.4.1'
+
+    // Jackson Core » 2.19.0
+    // Core Jackson processing abstractions (aka Streaming API), implementation for JSON
+    //
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.19.0'
+    //Jackson Databind » 2.19.0
+    // General data-binding functionality for Jackson: works on core streaming API
+    //
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.0'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
