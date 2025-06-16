@@ -67,7 +67,6 @@ public class Labels {
     public void setFullLabel(FullLabel fullLabel) {
         this.fullLabel = fullLabel;
     }
-    
     @JsonProperty("label")
     public Label getLabel() {
         return label;

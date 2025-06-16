@@ -1,10 +1,7 @@
 package com.joaquinonsoft.oscaroscrapper.dto;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Setter
 @Getter

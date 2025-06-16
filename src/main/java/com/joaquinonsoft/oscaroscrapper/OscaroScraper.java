@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joaquinonsoft.oscaroscrapper.dto.Brand;
 import com.joaquinonsoft.oscaroscrapper.dto.Family;
 import com.joaquinonsoft.oscaroscrapper.dto.Model;
+import com.joaquinonsoft.oscaroscrapper.dto.Type;
 import com.joaquinonsoft.oscaroscrapper.pojo.Child;
 import com.joaquinonsoft.oscaroscrapper.pojo.VehiclesMng;
 import org.apache.logging.log4j.LogManager;
@@ -67,7 +68,7 @@ public class OscaroScraper {
     protected List<Model> getModels4Family(String familyId){
         List<Model> models = null;
 
-        VehiclesMng vehicles = readURL(getURL(familyId, Level.MODEL));
+        VehiclesMng vehicles = readURL(getURL(familyId, Level.FAMILY));
 
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             models = new LinkedList<>();
@@ -77,6 +78,21 @@ public class OscaroScraper {
         }
 
         return models;
+    }
+
+    protected List<Type> getTypes4Model(String modelId){
+        List<Type> types = null;
+
+        VehiclesMng vehicles = readURL(getURL(modelId, Level.MODEL));
+
+        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+            types = new LinkedList<>();
+            for(Child child: vehicles.getVehicles().getFirst().getChildren()){
+                types.add(new Type(child.getId(), child.getLabels().getFullLabelFragment().getEs()));
+            }
+        }
+
+        return types;
     }
 
     private VehiclesMng readURL(URL url) {

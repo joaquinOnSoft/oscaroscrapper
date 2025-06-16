@@ -1,15 +1,11 @@
 
 package com.joaquinonsoft.oscaroscrapper.pojo;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -18,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "labels",
     "level",
     "leaf",
-    "energy",
     "ancestors"
 })
 public class Vehicle {
@@ -28,15 +23,13 @@ public class Vehicle {
     @JsonProperty("children")
     private List<Child> children;
     @JsonProperty("labels")
-    private Labels labels;
+    private Object labels;
     @JsonProperty("level")
     private Integer level;
     @JsonProperty("leaf")
     private Boolean leaf;
-    @JsonProperty("energy")
-    private Energy energy;
     @JsonProperty("ancestors")
-    private List<Ancestor> ancestors;
+    private List<Object> ancestors;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -51,22 +44,22 @@ public class Vehicle {
     }
 
     @JsonProperty("children")
-    public  List<Child> getChildren() {
+    public List<Child> getChildren() {
         return children;
     }
 
     @JsonProperty("children")
-    public void setChildren( List<Child> children) {
+    public void setChildren(List<Child> children) {
         this.children = children;
     }
 
     @JsonProperty("labels")
-    public Labels getLabels() {
+    public Object getLabels() {
         return labels;
     }
 
     @JsonProperty("labels")
-    public void setLabels(Labels labels) {
+    public void setLabels(Object labels) {
         this.labels = labels;
     }
 
@@ -90,23 +83,13 @@ public class Vehicle {
         this.leaf = leaf;
     }
 
-    @JsonProperty("energy")
-    public Energy getEnergy() {
-        return energy;
-    }
-
-    @JsonProperty("energy")
-    public void setEnergy(Energy energy) {
-        this.energy = energy;
-    }
-
     @JsonProperty("ancestors")
-    public List<Ancestor> getAncestors() {
+    public List<Object> getAncestors() {
         return ancestors;
     }
 
     @JsonProperty("ancestors")
-    public void setAncestors(List<Ancestor> ancestors) {
+    public void setAncestors(List<Object> ancestors) {
         this.ancestors = ancestors;
     }
 
