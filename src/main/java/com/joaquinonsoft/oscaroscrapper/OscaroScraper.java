@@ -7,7 +7,9 @@ import com.joaquinonsoft.oscaroscrapper.dto.Brand;
 import com.joaquinonsoft.oscaroscrapper.dto.Family;
 import com.joaquinonsoft.oscaroscrapper.dto.Model;
 import com.joaquinonsoft.oscaroscrapper.dto.Type;
+import com.joaquinonsoft.oscaroscrapper.pojo.Ancestor;
 import com.joaquinonsoft.oscaroscrapper.pojo.Child;
+import com.joaquinonsoft.oscaroscrapper.pojo.Vehicle;
 import com.joaquinonsoft.oscaroscrapper.pojo.VehiclesMng;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -95,6 +97,29 @@ public class OscaroScraper {
         return types;
     }
 
+    protected Type getTypeDetails(String typeId){
+        Type type = null;
+
+        VehiclesMng vehicles = readURL(getURL(typeId, Level.TYPE));
+
+        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+            Vehicle child = vehicles.getVehicles().getFirst();
+            type = new Type(child.getId(),
+                    child.getLabels().getCoreLabel().getEs(),
+                    child.getLabels().getComplementLabel().getEs(),
+                    child.getLabels().getFullLabelFragment().getEs(),
+                    child.getLabels().getFullLabel().getEs(),
+                    child.getEnergy().getLabel().getEs()
+                    );
+
+            for(Ancestor ancestor: child.getAncestors()) {
+                type.addAncestor(ancestor.getId());
+            }
+        }
+
+        return type;
+    }
+
     private VehiclesMng readURL(URL url) {
         VehiclesMng vehicles = null;
 
@@ -160,7 +185,8 @@ public class OscaroScraper {
         ROOT("root"),
         BRAND("brand"),
         FAMILY("family"),
-        MODEL("model");
+        MODEL("model"),
+        TYPE("type");
 
         private final String label;
 

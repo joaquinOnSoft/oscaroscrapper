@@ -50,4 +50,19 @@ public class OscaroScraperTest {
         Assertions.assertEquals("63835", types.getFirst().getId());
         Assertions.assertEquals("GrandCoupe 1.5 Blue dCi EDC6 115 cv Transmisión automática", types.getFirst().getName());
     }
+
+    @Test
+    public void getTypeDetails(){
+        Type type = wrapper.getTypeDetails("63833");
+        Assertions.assertNotNull(type);
+        Assertions.assertEquals("RENAULT Mégane", type.getName());
+        Assertions.assertEquals( "IV Fase 2 Sedan GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getComplementName());
+        Assertions.assertEquals( "GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getFullFragmentName());
+        Assertions.assertEquals("RENAULT Mégane IV Fase 2 Sedan GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getFullName());
+        Assertions.assertEquals("Gasolina", type.getEnergy());
+        Assertions.assertEquals("0", type.getAncestor(0));
+        Assertions.assertEquals("ma-178", type.getAncestor(1));
+        Assertions.assertEquals("fa-650", type.getAncestor(2));
+        Assertions.assertEquals( "mo-7174", type.getAncestor(3));
+    }
 }
