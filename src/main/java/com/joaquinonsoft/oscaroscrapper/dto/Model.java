@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Setter
@@ -14,6 +15,13 @@ public class Model extends AbstractVehicle{
 
     public Model(String id, String name) {
         super(id, name);
+        types = new LinkedList<>();
+    }
+
+    public void addTypes(List<Type> pType) {
+        if (pType != null) {
+            types.addAll(pType);
+        }
     }
 
     public void addType(Type type) {

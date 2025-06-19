@@ -22,6 +22,12 @@ public class Brand extends AbstractVehicle{
         families = new LinkedList<>();
     }
 
+    public void addFamilies(List<Family> pFamilies){
+        if(families != null) {
+            families.addAll(pFamilies);
+        }
+    }
+
     public void addFamily(Family family){
         if(family != null) {
             families.add(family);

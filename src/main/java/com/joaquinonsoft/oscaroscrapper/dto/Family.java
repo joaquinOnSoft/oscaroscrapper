@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Setter
@@ -14,6 +15,13 @@ public class Family extends AbstractVehicle {
 
     public Family(String id, String name) {
         super(id, name);
+        models = new LinkedList<>();
+    }
+
+    public void addModels(List<Model> pModels) {
+        if (pModels != null) {
+            models.addAll(pModels);
+        }
     }
 
     public void addModel(Model model) {

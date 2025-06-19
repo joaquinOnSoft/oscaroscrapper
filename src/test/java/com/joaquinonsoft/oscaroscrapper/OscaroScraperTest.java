@@ -65,4 +65,33 @@ public class OscaroScraperTest {
         Assertions.assertEquals("fa-650", type.getAncestor(2));
         Assertions.assertEquals( "mo-7174", type.getAncestor(3));
     }
+
+    //@Test
+    // The execution fo this test takes too much time (commented)
+    void getBrandsTypes(){
+        List<Brand> brands = wrapper.getBrandsTypes();
+        Assertions.assertNotNull(brands);
+    }
+
+
+    @Test
+    void getBrandTypes(){
+        Brand brand = wrapper.getBrandTypes(new Brand("ma-138", "SMART", "SMART"));
+        Assertions.assertNotNull(brand);
+
+        List<Family> families = brand.getFamilies();
+        Assertions.assertNotNull(families);
+        Assertions.assertEquals(6, families.size());
+        Assertions.assertEquals("Fortwo", families.getFirst().getName());
+
+        List<Model> models = families.getFirst().getModels();
+        Assertions.assertNotNull(models);
+        Assertions.assertEquals(8, models.size());
+        Assertions.assertEquals("Coupe (451) (01/2007 - 11/2014)", models.getFirst().getName());
+
+        List<Type> types = models.getFirst().getTypes();
+        Assertions.assertNotNull(types);
+        Assertions.assertEquals(12, types.size());
+        Assertions.assertEquals("SMART Fortwo Coupe (451) ED 41 cv Transmisión automática", types.getFirst().getFullName());
+    }
 }

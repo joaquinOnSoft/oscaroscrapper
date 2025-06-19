@@ -35,7 +35,67 @@ public class OscaroScraper {
 
     protected static final Logger log = LogManager.getLogger(OscaroScraper.class);
 
+    /**
+     * Recover all the families, models and types for all the brands
+     * @return List of brands with all the families, models and types
+     */
+    public List<Brand> getBrandsTypes(){
+        List<Brand> brands = getBrands();
 
+        if(brands != null){
+            int numBrands = brands.size();
+            // Adding families for each brand
+            for (int i=0; i<numBrands; i++) {
+                brands.set(i, getBrandTypes(brands.get(i)));
+            }
+        }
+
+        return brands;
+    }
+
+    /**
+     * Recover all the families, models and types for a given brand
+     * @param brand - Brand to get all the families, models and types
+     * @return List of brands with all the families, models and types for a given brand
+     */
+    public Brand getBrandTypes(Brand brand){
+        List<Family> families;
+        List<Model> models;
+        List<Type> types;
+
+        if (brand != null) {
+            log.debug(brand.getName());
+            families = getFamilies4Brand(brand.getId());
+
+            if (families != null) {
+                brand.addFamilies(families);
+
+                // Adding models for each family
+                for (Family family : families) {
+                    log.debug("\t{}", family.getName());
+                    models = getModels4Family(family.getId());
+                    if (models != null) {
+                        family.addModels(models);
+
+                        // Adding types for each model
+                        for (Model model : models) {
+                            log.debug("\t\t{}", model.getName());
+                            types = getTypes4Model(model.getId());
+                            if (types != null) {
+                                for(Type type: types) {
+                                    log.debug("\t\t\t{}", type.getName());
+                                    type = getTypeDetails(type.getId());
+                                    model.addType(type);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return brand;
+    }
 
     protected List<Brand> getBrands(){
         List<Brand> brands = null;
@@ -190,7 +250,7 @@ public class OscaroScraper {
 
         private final String label;
 
-        private Level(String label){
+        Level(String label){
             this.label = label;
         }
 
