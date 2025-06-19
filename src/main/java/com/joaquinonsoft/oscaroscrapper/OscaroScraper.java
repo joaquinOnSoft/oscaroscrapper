@@ -97,7 +97,7 @@ public class OscaroScraper {
         return brand;
     }
 
-    protected List<Brand> getBrands(){
+    public List<Brand> getBrands(){
         List<Brand> brands = null;
 
         VehiclesMng vehicles = readURL(getURL("0", Level.ROOT));
