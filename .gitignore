@@ -43,3 +43,6 @@ bin/
 
 ### log files ###
 *.log
+
+### .csv files ###
+*.csv

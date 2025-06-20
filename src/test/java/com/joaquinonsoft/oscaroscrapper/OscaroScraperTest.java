@@ -5,12 +5,19 @@ import com.joaquinonsoft.oscaroscrapper.dto.Family;
 import com.joaquinonsoft.oscaroscrapper.dto.Model;
 import com.joaquinonsoft.oscaroscrapper.dto.Type;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 public class OscaroScraperTest {
-    private static final OscaroScraper wrapper = new OscaroScraper();
+    private static OscaroScrapper wrapper;
+
+    @BeforeEach
+    public void init(){
+        //By default, Oscaro scraper is using "es" as default language
+        wrapper = new OscaroScrapper();
+    }
 
     @Test
     public void getBrands(){
@@ -22,6 +29,27 @@ public class OscaroScraperTest {
         Assertions.assertEquals("VOLKSWAGEN", brands.getFirst().getFullName());
     }
 
+    @Test
+    public void getBrandsInFrench(){
+        wrapper.setLang("fr");
+        List<Brand> brands = wrapper.getBrands();
+        Assertions.assertNotNull(brands);
+        Assertions.assertEquals(121, brands.size());
+        Assertions.assertEquals("ma-178", brands.getFirst().getId());
+        Assertions.assertEquals("RENAULT", brands.getFirst().getName());
+        Assertions.assertEquals("RENAULT", brands.getFirst().getFullName());
+    }
+
+    @Test
+    public void getBrandsInPortuguese(){
+        wrapper.setLang("pt");
+        List<Brand> brands = wrapper.getBrands();
+        Assertions.assertNotNull(brands);
+        Assertions.assertEquals(121, brands.size());
+        Assertions.assertEquals("ma-178", brands.getFirst().getId());
+        Assertions.assertEquals("RENAULT", brands.getFirst().getName());
+        Assertions.assertEquals("RENAULT", brands.getFirst().getFullName());
+    }
 
     @Test
     public void getFamilies4Brand(){

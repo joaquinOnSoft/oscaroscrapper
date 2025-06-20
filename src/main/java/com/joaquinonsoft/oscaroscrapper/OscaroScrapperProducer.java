@@ -14,13 +14,14 @@ import java.util.concurrent.BlockingQueue;
 public class OscaroScrapperProducer implements Runnable{
     private BlockingQueue<BrandJob> queue;
     private int numConsumers;
+    private String lang;
 
     @Setter(AccessLevel.NONE)
     private static final Logger log = LogManager.getLogger(OscaroScrapperProducer.class);
 
     @Override
     public void run() {
-        OscaroScraper wrapper = new OscaroScraper();
+        OscaroScrapper wrapper = new OscaroScrapper(lang);
         List<Brand> brands = wrapper.getBrands();
 
         if(brands != null){
@@ -34,6 +35,8 @@ public class OscaroScrapperProducer implements Runnable{
             log.info("Consumer {} launched.", i);
             queue.add(new BrandJob(JobType.KILL_JOB));
         }
+
+        log.info("Consumer {} launched.", (numConsumers-1));
         queue.add(new BrandJob(JobType.KILL_THEM_ALL));
     }
 }

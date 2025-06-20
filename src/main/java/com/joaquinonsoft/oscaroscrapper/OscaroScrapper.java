@@ -11,6 +11,9 @@ import com.joaquinonsoft.oscaroscrapper.pojo.Ancestor;
 import com.joaquinonsoft.oscaroscrapper.pojo.Child;
 import com.joaquinonsoft.oscaroscrapper.pojo.Vehicle;
 import com.joaquinonsoft.oscaroscrapper.pojo.VehiclesMng;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,16 +27,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class OscaroScraper {
+@AllArgsConstructor
+public class OscaroScrapper {
 
-    private static final String BASE_URL = "https://www.oscaro.es";
+    @Setter(AccessLevel.NONE)
+    private static final String BASE_URL = "https://www.oscaro.com";
+    @Setter(AccessLevel.NONE)
     private static final String VEHICLES_URL = "/xhr/nav/vehicles/%LANG%/%LANG%?vehicles-id=%ID%&tree-level=%LEVEL%&page-type=home";
 
+    @Setter(AccessLevel.NONE)
     public static final String LEVEL_PLACEHOLDER = "%LEVEL%";
+    @Setter(AccessLevel.NONE)
     public static final String LANG_PLACEHOLDER = "%LANG%";
+    @Setter(AccessLevel.NONE)
     public static final String ID_PLACEHOLDER = "%ID%";
 
-    protected static final Logger log = LogManager.getLogger(OscaroScraper.class);
+    @Setter(AccessLevel.NONE)
+    protected static final Logger log = LogManager.getLogger(OscaroScrapper.class);
+
+    @Setter
+    private String lang;
+
+    public OscaroScrapper(){
+        lang = "es";
+    }
 
     /**
      * Recover all the families, models and types for all the brands
@@ -105,7 +122,7 @@ public class OscaroScraper {
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             brands = new LinkedList<>();
             for(Child child: vehicles.getVehicles().getFirst().getChildren()){
-                brands.add(new Brand(child.getId(), child.getLabels().getLabel().getEs(), child.getLabels().getFullLabelFragment().getEs()));
+                brands.add(new Brand(child.getId(), child.getLabels().getLabel().get(lang), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
 
@@ -120,7 +137,7 @@ public class OscaroScraper {
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             families = new LinkedList<>();
             for(Child child: vehicles.getVehicles().getFirst().getChildren()){
-                families.add(new Family(child.getId(), child.getLabels().getFullLabelFragment().getEs()));
+                families.add(new Family(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
 
@@ -135,7 +152,7 @@ public class OscaroScraper {
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             models = new LinkedList<>();
             for(Child child: vehicles.getVehicles().getFirst().getChildren()){
-                models.add(new Model(child.getId(), child.getLabels().getFullLabelFragment().getEs()));
+                models.add(new Model(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
 
@@ -150,7 +167,7 @@ public class OscaroScraper {
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             types = new LinkedList<>();
             for(Child child: vehicles.getVehicles().getFirst().getChildren()){
-                types.add(new Type(child.getId(), child.getLabels().getFullLabelFragment().getEs()));
+                types.add(new Type(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
 
@@ -165,11 +182,11 @@ public class OscaroScraper {
         if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             Vehicle child = vehicles.getVehicles().getFirst();
             type = new Type(child.getId(),
-                    child.getLabels().getCoreLabel().getEs(),
-                    child.getLabels().getComplementLabel().getEs(),
-                    child.getLabels().getFullLabelFragment().getEs(),
-                    child.getLabels().getFullLabel().getEs(),
-                    child.getEnergy().getLabel().getEs()
+                    child.getLabels().getCoreLabel().get(lang),
+                    child.getLabels().getComplementLabel().get(lang),
+                    child.getLabels().getFullLabelFragment().get(lang),
+                    child.getLabels().getFullLabel().get(lang),
+                    child.getEnergy().getLabel().get(lang)
                     );
 
             for(Ancestor ancestor: child.getAncestors()) {
@@ -221,7 +238,6 @@ public class OscaroScraper {
      */
     private URL getURL(String id, Level level) {
         URL url = null;
-        String lang = "es";
 
         String urlStr = BASE_URL + VEHICLES_URL
                 .replace(ID_PLACEHOLDER, id)

@@ -8,13 +8,20 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+        "de",
+        "en",
         "es",
-        "fr"
+        "fr",
+        "it",
+        "pt"
 })
 public abstract class AbstractLabel {
 
     @JsonProperty("de")
     protected String de;
+
+    @JsonProperty("en")
+    protected String en;
 
     @JsonProperty("es")
     protected String es;
@@ -41,6 +48,17 @@ public abstract class AbstractLabel {
     public void setDe(String de) {
         this.de = de;
     }
+
+    @JsonProperty("en")
+    public String getEn() {
+        return en;
+    }
+
+    @JsonProperty("en")
+    public void setEn(String en) {
+        this.en = en;
+    }
+
 
     @JsonProperty("es")
     public String getEs() {
@@ -82,6 +100,21 @@ public abstract class AbstractLabel {
         this.pt = pt;
     }
 
+
+    public String get(String lang){
+        String label = getEs();
+
+        switch (lang){
+            case "de" -> label = getDe();
+            case "en" -> label = getEn();
+            case "es" -> label = getEs();
+            case "fr" -> label = getFr();
+            case "it" -> label = getIt();
+            case "pt" -> label = getPt();
+        }
+
+        return label;
+    }
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
