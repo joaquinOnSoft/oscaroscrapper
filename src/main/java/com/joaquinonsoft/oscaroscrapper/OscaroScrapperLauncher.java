@@ -79,11 +79,11 @@ public class OscaroScrapperLauncher {
             lang = cmd.getOptionValue(LONG_PARAM_LANG);
 
             if(!supportedLands.contains(lang.toLowerCase())){
-                throw new InvalidParameterException("--lang # Should be a supported language (de, en, es, fr, it, pt");
+                throw new InvalidParameterException("--lang # Should be a supported language (es, fr, pt");
             }
         }
 
-        return lang;
+        return lang.toLowerCase();
     }
 
     private static int validateParamThreads(CommandLine cmd) throws InvalidParameterException{

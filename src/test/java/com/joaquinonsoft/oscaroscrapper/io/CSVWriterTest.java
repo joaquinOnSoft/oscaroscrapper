@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class CSVWriterTest {
     @Test
     public void write(){
@@ -19,8 +21,8 @@ public class CSVWriterTest {
         writer.close();
 
         File example = new File("example.csv");
-        Assertions.assertTrue(example.exists());
+        assertTrue(example.exists());
 
-        Assertions.assertTrue(example.delete());
+        assertTrue(example.delete());
     }
 }
