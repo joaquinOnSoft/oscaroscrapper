@@ -32,18 +32,20 @@ public class OscaroScrapperConsumer implements Runnable {
 
             while (true) {
                 job = queue.take();
-                if (job.getType() == JobType.KILL_JOB || job.getType() == JobType.KILL_THEM_ALL) {
+
+                log.info("> Job type: {} ", job.getType());
+
+                if (job.getType() == JobType.KILL_JOB ) {
                     log.info("Consumer ending...");
 
-                    if (job.getType() == JobType.KILL_THEM_ALL) {
-                        CSVMerger.mergeCSVFiles(System.getProperty("user.dir"),
-                                "vehicles-" + lang + ".csv");
+                    if (queue.isEmpty()) {
+                        String vehiclesFileName = "vehicles-" + lang + ".csv";
+                        log.info("Merging csv files into {}...", vehiclesFileName);
+                        CSVMerger.mergeCSVFiles(System.getProperty("user.dir"), vehiclesFileName);
                     }
+                    
                     return;
                 }
-
-
-
 
                 brand = job.getBrand();
                 log.info("{} > {}", brand.getId(), brand.getName());

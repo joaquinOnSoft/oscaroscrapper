@@ -89,18 +89,18 @@ public class OscaroScrapper {
 
                 // Adding models for each family
                 for (Family family : families) {
-                    log.debug("\t{}", family.getName());
+                    log.debug("Family:\t{}", family.getName());
                     models = getModels4Family(family.getId());
                     if (models != null) {
                         family.addModels(models);
 
                         // Adding types for each model
                         for (Model model : models) {
-                            log.debug("\t\t{}", model.getName());
+                            log.debug("Model:\t\t{}", model.getName());
                             types = getTypes4Model(model.getId());
                             if (types != null) {
                                 for(Type type: types) {
-                                    log.debug("\t\t\t{}", type.getName());
+                                    log.debug("Type:\t\t\t{}", type.getName());
                                     type = getTypeDetails(type.getId());
                                     model.addType(type);
                                 }

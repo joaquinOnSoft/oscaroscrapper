@@ -26,17 +26,14 @@ public class OscaroScrapperProducer implements Runnable{
 
         if(brands != null){
             for (Brand brand: brands){
-                log.info("{} added.", brand.getName());
+                log.info("Brand {} added.", brand.getName());
                 queue.add(new BrandJob(JobType.BRAND, brand));
             }
         }
 
-        for(int i=0; i<(numConsumers-1); i++) {
-            log.info("Consumer {} launched.", i);
+        for(int i=0; i<numConsumers; i++) {
+            log.info("Adding KILL JOB {} message.", i);
             queue.add(new BrandJob(JobType.KILL_JOB));
         }
-
-        log.info("Consumer {} launched.", (numConsumers-1));
-        queue.add(new BrandJob(JobType.KILL_THEM_ALL));
     }
 }

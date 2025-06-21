@@ -13,9 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class OscaroScrapperLauncher {
     private static final int DEFAULT_NUM_THREADS = 4;
-    private static final String
-
-            DEFAULT_LANG = "es";
+    private static final String DEFAULT_LANG = "es";
 
     private static final String SHORT_PARAM_THREADS = "t";
     private static final String LONG_PARAM_THREADS = "threads";
@@ -45,13 +43,13 @@ public class OscaroScrapperLauncher {
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
-        CommandLine cmd = null;
-        int numComsumers = DEFAULT_NUM_THREADS;
+        CommandLine cmd;
+        int numConsumers = DEFAULT_NUM_THREADS;
         String lang = DEFAULT_LANG;
 
         try {
             cmd = parser.parse(options, args);
-            numComsumers = validateParamThreads(cmd);
+            numConsumers = validateParamThreads(cmd);
             lang = validateParamLang(cmd);
         }
         catch (ParseException | InvalidParameterException e) {
@@ -63,11 +61,15 @@ public class OscaroScrapperLauncher {
 
         BlockingQueue<BrandJob> queue = new LinkedBlockingQueue<>();
 
-        OscaroScrapperConsumer consumer;
-        for (int i=0; i<numComsumers; i++){
+        for (int i=0; i<numConsumers; i++){
+            log.info(">> Consumer {} launched.", i);
             new Thread(new OscaroScrapperConsumer(queue, lang)).start();
         }
-        new Thread(new OscaroScrapperProducer(queue, numComsumers, lang)).start();
+        log.info("# {} consumers launched in total.", numConsumers);
+
+
+        log.info(">>> Producer launched.");
+        new Thread(new OscaroScrapperProducer(queue, numConsumers, lang)).start();
     }
 
 
@@ -99,7 +101,7 @@ public class OscaroScrapperLauncher {
                 }
 
                 int cores = Runtime.getRuntime().availableProcessors();
-                log.debug("# cores: " + cores);
+                log.debug("# cores: {}", cores);
 
                 if(numThreads > cores) {
                     throw new InvalidParameterException("--thread # Should be a positive integer smaller o equal than # of cores (" + cores + ")");
