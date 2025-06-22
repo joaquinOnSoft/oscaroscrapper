@@ -1,4 +1,3 @@
-
 package com.joaquinonsoft.oscaroscrapper.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,6 +1,5 @@
 package com.joaquinonsoft.oscaroscrapper.io;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -9,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CSVWriterTest {
     @Test
-    public void write(){
+    public void write() {
         CSVWriter writer = new CSVWriter("example.csv");
 
         //Header
         writer.write("name,alias");
         writer.write("Peter Parker,Spiderman");
         writer.write("James Howlett,Wolverine ");
-        writer.write(new String[] {"Clark Kent", "Superman"});
+        writer.write(new String[]{"Clark Kent", "Superman"});
 
         writer.close();
 

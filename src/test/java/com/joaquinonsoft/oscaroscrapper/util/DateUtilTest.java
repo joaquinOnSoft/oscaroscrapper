@@ -12,7 +12,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class DateUtilTest{
+public class DateUtilTest {
 
     private int subStringToInt(String str, int init, int end) {
         return Integer.parseInt(str.substring(init, end));

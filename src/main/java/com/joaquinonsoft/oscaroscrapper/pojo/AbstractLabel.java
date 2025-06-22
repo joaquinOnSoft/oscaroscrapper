@@ -101,10 +101,10 @@ public abstract class AbstractLabel {
     }
 
 
-    public String get(String lang){
+    public String get(String lang) {
         String label = getEs();
 
-        switch (lang){
+        switch (lang) {
             case "de" -> label = getDe();
             case "en" -> label = getEn();
             case "es" -> label = getEs();

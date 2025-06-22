@@ -16,13 +16,13 @@ public class OscaroScraperTest {
     private static OscaroScrapper wrapper;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         //By default, Oscaro scraper is using "es" as default language
         wrapper = new OscaroScrapper();
     }
 
     @Test
-    public void getBrands(){
+    public void getBrands() {
         List<Brand> brands = wrapper.getBrands();
         assertNotNull(brands);
         assertEquals(121, brands.size());
@@ -32,7 +32,7 @@ public class OscaroScraperTest {
     }
 
     @Test
-    public void getBrandsInFrench(){
+    public void getBrandsInFrench() {
         wrapper.setLang("fr");
         List<Brand> brands = wrapper.getBrands();
         assertNotNull(brands);
@@ -43,7 +43,7 @@ public class OscaroScraperTest {
     }
 
     @Test
-    public void getBrandsInPortuguese(){
+    public void getBrandsInPortuguese() {
         wrapper.setLang("pt");
         List<Brand> brands = wrapper.getBrands();
         assertNotNull(brands);
@@ -54,7 +54,7 @@ public class OscaroScraperTest {
     }
 
     @Test
-    public void getFamilies4Brand(){
+    public void getFamilies4Brand() {
         List<Family> families = wrapper.getFamilies4Brand("ma-178");
         assertNotNull(families);
         assertEquals(65, families.size());
@@ -64,7 +64,7 @@ public class OscaroScraperTest {
 
 
     @Test
-    public void getModels4Family(){
+    public void getModels4Family() {
         List<Model> models = wrapper.getModels4Family("fa-650");
         assertNotNull(models);
         assertEquals(30, models.size());
@@ -73,7 +73,7 @@ public class OscaroScraperTest {
     }
 
     @Test
-    public void getTypes4Model(){
+    public void getTypes4Model() {
         List<Type> types = wrapper.getTypes4Model("mo-7174");
         assertNotNull(types);
         assertEquals(5, types.size());
@@ -82,30 +82,30 @@ public class OscaroScraperTest {
     }
 
     @Test
-    public void getTypeDetails(){
+    public void getTypeDetails() {
         Type type = wrapper.getTypeDetails("63833");
         assertNotNull(type);
         assertEquals("RENAULT Mégane", type.getName());
-        assertEquals( "IV Fase 2 Sedan GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getComplementName());
-        assertEquals( "GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getFullFragmentName());
+        assertEquals("IV Fase 2 Sedan GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getComplementName());
+        assertEquals("GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getFullFragmentName());
         assertEquals("RENAULT Mégane IV Fase 2 Sedan GrandCoupe 1.3 TCe 16V GPF EDC7 140 cv Transmisión automática", type.getFullName());
         assertEquals("Gasolina", type.getEnergy());
         assertEquals("0", type.getAncestor(0));
         assertEquals("ma-178", type.getAncestor(1));
         assertEquals("fa-650", type.getAncestor(2));
-        assertEquals( "mo-7174", type.getAncestor(3));
+        assertEquals("mo-7174", type.getAncestor(3));
     }
 
     //@Test
     // The execution fo this test takes too much time (commented)
-    void getBrandsTypes(){
+    void getBrandsTypes() {
         List<Brand> brands = wrapper.getBrandsTypes();
         assertNotNull(brands);
     }
 
 
     @Test
-    void getBrandTypes(){
+    void getBrandTypes() {
         Brand brand = wrapper.getBrandTypes(new Brand("ma-138", "SMART", "SMART"));
         assertNotNull(brand);
 

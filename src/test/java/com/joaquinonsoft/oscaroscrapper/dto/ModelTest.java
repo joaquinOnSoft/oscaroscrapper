@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelTest {
     @Test
-    public void initModel(){
+    public void initModel() {
         Model model = new Model("mo-1366", "II Hatchback (09/2002 - 10/2008)");
         assertNotNull(model.getManufacturedFrom());
         assertEquals(1030831200000L, model.getManufacturedFrom().getTime());

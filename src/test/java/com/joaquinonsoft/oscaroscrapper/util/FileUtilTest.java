@@ -1,11 +1,11 @@
 package com.joaquinonsoft.oscaroscrapper.util;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileUtilTest {
     private static final String EXAMPLE_FILE_NAME = "renault.csv";

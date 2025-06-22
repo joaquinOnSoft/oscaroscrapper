@@ -13,7 +13,7 @@ public class CSVMergerTest {
     public static final String VEHICLES_CSV = "vehicles.csv";
 
     @Test
-    public void mergeCSVFiles(){
+    public void mergeCSVFiles() {
         File resources = FileUtil.getFileFromResources("renault.csv");
 
         assertNotNull(resources);

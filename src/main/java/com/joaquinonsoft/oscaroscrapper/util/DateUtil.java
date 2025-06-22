@@ -10,7 +10,7 @@ public class DateUtil {
 
     public static String dateToStr(Date d, String format) {
         String strDate = "";
-        if(d != null) {
+        if (d != null) {
             DateFormat dateFormat = new SimpleDateFormat(format);
             strDate = dateFormat.format(d);
         }
@@ -23,10 +23,11 @@ public class DateUtil {
 
     /**
      * Generate a Date object from a string in UTC format
+     *
      * @param utc - String which contains a date in UTC format, e.g.
-     * "2020-05-21T16:30:52.123Z"
+     *            "2020-05-21T16:30:52.123Z"
      * @return Date object from a string in UTC format
-     * @throws ParseException
+     * @throws ParseException if the date doesn't math the pattern "yyyy-MM-dd'T'HH:mm:ss'Z'"
      */
     public static Date utcToDate(String utc) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(utc);

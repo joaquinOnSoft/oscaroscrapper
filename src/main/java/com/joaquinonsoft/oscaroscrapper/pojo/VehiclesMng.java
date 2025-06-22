@@ -1,4 +1,3 @@
-
 package com.joaquinonsoft.oscaroscrapper.pojo;
 
 import com.fasterxml.jackson.annotation.*;
@@ -9,7 +8,7 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "vehicles"
+        "vehicles"
 })
 
 public class VehiclesMng {
@@ -17,7 +16,7 @@ public class VehiclesMng {
     @JsonProperty("vehicles")
     private List<Vehicle> vehicles;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private final Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("vehicles")
     public List<Vehicle> getVehicles() {

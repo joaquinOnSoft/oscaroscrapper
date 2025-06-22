@@ -1,4 +1,3 @@
-
 package com.joaquinonsoft.oscaroscrapper.pojo;
 
 import com.fasterxml.jackson.annotation.*;
@@ -8,11 +7,11 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "core-label",
-    "complement-label",
-    "full-label-fragment",
-    "full-label",
-    "label"
+        "core-label",
+        "complement-label",
+        "full-label-fragment",
+        "full-label",
+        "label"
 })
 public class Labels {
 
@@ -27,7 +26,7 @@ public class Labels {
     @JsonProperty("label")
     private Label label;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private final Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("core-label")
     public CoreLabel getCoreLabel() {
@@ -48,6 +47,7 @@ public class Labels {
     public void setComplementLabel(ComplementLabel complementLabel) {
         this.complementLabel = complementLabel;
     }
+
     @JsonProperty("full-label-fragment")
     public FullLabelFragment getFullLabelFragment() {
         return fullLabelFragment;
@@ -57,7 +57,7 @@ public class Labels {
     public void setFullLabelFragment(FullLabelFragment fullLabelFragment) {
         this.fullLabelFragment = fullLabelFragment;
     }
-    
+
     @JsonProperty("full-label")
     public FullLabel getFullLabel() {
         return fullLabel;
@@ -67,7 +67,7 @@ public class Labels {
     public void setFullLabel(FullLabel fullLabel) {
         this.fullLabel = fullLabel;
     }
-    
+
     @JsonProperty("label")
     public Label getLabel() {
         return label;

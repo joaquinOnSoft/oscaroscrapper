@@ -14,12 +14,12 @@ public class NumberUtil {
 
     /**
      * Check If a String match a given regular expression
+     *
      * @param strPatter - Regular expression to validate the string.
-     * @param strNum - String to be validated
+     * @param strNum    - String to be validated
      * @return true if match, false in other case
-     * @see
-     * <a href="https://www.baeldung.com/java-check-string-number">
-     * 		Check If a String Is Numeric in Java
+     * @see <a href="https://www.baeldung.com/java-check-string-number">
+     * Check If a String Is Numeric in Java
      * </a>
      */
     private static boolean match(String strPatter, String strNum) {

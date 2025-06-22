@@ -1,4 +1,3 @@
-
 package com.joaquinonsoft.oscaroscrapper.pojo;
 
 import com.fasterxml.jackson.annotation.*;
@@ -8,14 +7,14 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "label"
+        "label"
 })
 public class Energy {
 
     @JsonProperty("label")
     private Label label;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private final Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("label")
     public Label getLabel() {

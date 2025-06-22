@@ -3,10 +3,32 @@ plugins {
 }
 
 group = 'com.joaquinonsoft.importssdui'
-version = '1.0-SNAPSHOT'
+version = '25.06'
 
 repositories {
     mavenCentral()
+}
+
+
+jar {
+    //archiveFileName = "${rootProject.name}-${project.name}-${archiveVersion.get()}.jar"
+    archiveFileName = "${rootProject.name}${archiveVersion.get()}.jar"
+
+    manifest {
+        attributes 'Implementation-Title': 'Oscaro brand\' scrapper',
+                'Implementation-Version': version,
+                'Main-Class': 'com.joaquinonsoft.oscaroscrapper.OscaroScrapperLauncher'
+    }
+
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    //https://discuss.gradle.org/t/generate-runnable-jar-pakage-dependencies/28171
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 dependencies {
@@ -35,7 +57,14 @@ dependencies {
     // focuses on performance and low garbage generation. It has a plugin architecture
     // that makes it extensible and supports asynchronous logging based on LMAX Disruptor.
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
-    implementation 'org.apache.logging.log4j:log4j-core:3.0.0-beta3'
+    //implementation 'org.apache.logging.log4j:log4j-core:3.0.0-beta3'
+
+    // API for Apache Log4J, a highly configurable logging tool that focuses on performance and low garbage generation. It has a plugin architecture that makes it extensible and supports asynchronous logging based on LMAX Disruptor.
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation("org.apache.logging.log4j:log4j-api:2.25.0")
+    // Implementation for Apache Log4J, a highly configurable logging tool that focuses on performance and low garbage generation. It has a plugin architecture that makes it extensible and supports asynchronous logging based on LMAX Disruptor.
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation("org.apache.logging.log4j:log4j-core:2.25.0")
 
     // Apache Commons CLI » 1.9.0
     // Apache Commons CLI provides a simple API for presenting, processing, and

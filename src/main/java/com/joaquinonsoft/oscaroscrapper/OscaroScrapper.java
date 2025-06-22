@@ -48,21 +48,22 @@ public class OscaroScrapper {
     @Setter
     private String lang;
 
-    public OscaroScrapper(){
+    public OscaroScrapper() {
         lang = "es";
     }
 
     /**
      * Recover all the families, models and types for all the brands
+     *
      * @return List of brands with all the families, models and types
      */
-    public List<Brand> getBrandsTypes(){
+    public List<Brand> getBrandsTypes() {
         List<Brand> brands = getBrands();
 
-        if(brands != null){
+        if (brands != null) {
             int numBrands = brands.size();
             // Adding families for each brand
-            for (int i=0; i<numBrands; i++) {
+            for (int i = 0; i < numBrands; i++) {
                 brands.set(i, getBrandTypes(brands.get(i)));
             }
         }
@@ -72,10 +73,11 @@ public class OscaroScrapper {
 
     /**
      * Recover all the families, models and types for a given brand
+     *
      * @param brand - Brand to get all the families, models and types
      * @return List of brands with all the families, models and types for a given brand
      */
-    public Brand getBrandTypes(Brand brand){
+    public Brand getBrandTypes(Brand brand) {
         List<Family> families;
         List<Model> models;
         List<Type> types;
@@ -99,7 +101,7 @@ public class OscaroScrapper {
                             log.debug("Model:\t\t{}", model.getName());
                             types = getTypes4Model(model.getId());
                             if (types != null) {
-                                for(Type type: types) {
+                                for (Type type : types) {
                                     log.debug("Type:\t\t\t{}", type.getName());
                                     type = getTypeDetails(type.getId());
                                     model.addType(type);
@@ -114,14 +116,14 @@ public class OscaroScrapper {
         return brand;
     }
 
-    public List<Brand> getBrands(){
+    public List<Brand> getBrands() {
         List<Brand> brands = null;
 
         VehiclesMng vehicles = readURL(getURL("0", Level.ROOT));
 
-        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+        if (vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             brands = new LinkedList<>();
-            for(Child child: vehicles.getVehicles().getFirst().getChildren()){
+            for (Child child : vehicles.getVehicles().getFirst().getChildren()) {
                 brands.add(new Brand(child.getId(), child.getLabels().getLabel().get(lang), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
@@ -129,14 +131,14 @@ public class OscaroScrapper {
         return brands;
     }
 
-    protected List<Family> getFamilies4Brand(String brandId){
+    protected List<Family> getFamilies4Brand(String brandId) {
         List<Family> families = null;
 
         VehiclesMng vehicles = readURL(getURL(brandId, Level.BRAND));
 
-        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+        if (vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             families = new LinkedList<>();
-            for(Child child: vehicles.getVehicles().getFirst().getChildren()){
+            for (Child child : vehicles.getVehicles().getFirst().getChildren()) {
                 families.add(new Family(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
@@ -144,14 +146,14 @@ public class OscaroScrapper {
         return families;
     }
 
-    protected List<Model> getModels4Family(String familyId){
+    protected List<Model> getModels4Family(String familyId) {
         List<Model> models = null;
 
         VehiclesMng vehicles = readURL(getURL(familyId, Level.FAMILY));
 
-        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+        if (vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             models = new LinkedList<>();
-            for(Child child: vehicles.getVehicles().getFirst().getChildren()){
+            for (Child child : vehicles.getVehicles().getFirst().getChildren()) {
                 models.add(new Model(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
@@ -159,14 +161,14 @@ public class OscaroScrapper {
         return models;
     }
 
-    protected List<Type> getTypes4Model(String modelId){
+    protected List<Type> getTypes4Model(String modelId) {
         List<Type> types = null;
 
         VehiclesMng vehicles = readURL(getURL(modelId, Level.MODEL));
 
-        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+        if (vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             types = new LinkedList<>();
-            for(Child child: vehicles.getVehicles().getFirst().getChildren()){
+            for (Child child : vehicles.getVehicles().getFirst().getChildren()) {
                 types.add(new Type(child.getId(), child.getLabels().getFullLabelFragment().get(lang)));
             }
         }
@@ -174,12 +176,12 @@ public class OscaroScrapper {
         return types;
     }
 
-    protected Type getTypeDetails(String typeId){
+    protected Type getTypeDetails(String typeId) {
         Type type = null;
 
         VehiclesMng vehicles = readURL(getURL(typeId, Level.TYPE));
 
-        if(vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
+        if (vehicles != null && vehicles.getVehicles() != null && !vehicles.getVehicles().isEmpty()) {
             Vehicle child = vehicles.getVehicles().getFirst();
             type = new Type(child.getId(),
                     child.getLabels().getCoreLabel().get(lang),
@@ -187,9 +189,9 @@ public class OscaroScrapper {
                     child.getLabels().getFullLabelFragment().get(lang),
                     child.getLabels().getFullLabel().get(lang),
                     child.getEnergy().getLabel().get(lang)
-                    );
+            );
 
-            for(Ancestor ancestor: child.getAncestors()) {
+            for (Ancestor ancestor : child.getAncestors()) {
                 type.addAncestor(ancestor.getId());
             }
         }
@@ -204,7 +206,7 @@ public class OscaroScrapper {
         try {
             Scanner scanner = new Scanner(url.openStream(), StandardCharsets.UTF_8);
             scanner.useDelimiter("\\A");
-            String jsonString =  scanner.hasNext() ? scanner.next() : "";
+            String jsonString = scanner.hasNext() ? scanner.next() : "";
 
             ObjectMapper MAPPER = new ObjectMapper();
             vehicles = MAPPER.readValue(jsonString, VehiclesMng.class);
@@ -232,7 +234,8 @@ public class OscaroScrapper {
      *     <li><a href="https://www.oscaro.com/xhr/nav/vehicles/fr/fr?vehicles-id=mo-7174&tree-level=model&page-type=home">Types for Model</a></li>
      *     <li><a href="https://www.oscaro.com/xhr/nav/vehicles/fr/fr?vehicles-id=63833&tree-level=type&page-type=home">type</a></li>
      * </ul>
-     * @param id - Vehicle identifier
+     *
+     * @param id    - Vehicle identifier
      * @param level - Information level. Possible values: root, brand, family, model
      * @return URL to recover
      */
@@ -244,7 +247,7 @@ public class OscaroScrapper {
                 .replace(LEVEL_PLACEHOLDER, level.toString())
                 .replace(LANG_PLACEHOLDER, lang);
 
-        if(level.toString().compareToIgnoreCase("root") == 0) {
+        if (level.toString().compareToIgnoreCase("root") == 0) {
             urlStr += "&init=true";
         }
 
@@ -257,7 +260,7 @@ public class OscaroScrapper {
         return url;
     }
 
-    private enum Level{
+    private enum Level {
         ROOT("root"),
         BRAND("brand"),
         FAMILY("family"),
@@ -266,12 +269,12 @@ public class OscaroScrapper {
 
         private final String label;
 
-        Level(String label){
+        Level(String label) {
             this.label = label;
         }
 
         @Override
-        public String toString(){
+        public String toString() {
             return label;
         }
     }

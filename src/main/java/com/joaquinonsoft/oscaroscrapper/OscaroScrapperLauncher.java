@@ -18,17 +18,17 @@ public class OscaroScrapperLauncher {
     private static final String SHORT_PARAM_THREADS = "t";
     private static final String LONG_PARAM_THREADS = "threads";
 
-    private static final String SHORT_PARAM_LANG= "l";
+    private static final String SHORT_PARAM_LANG = "l";
     private static final String LONG_PARAM_LANG = "lang";
 
     private static final String HELP = """
-		Generates a CSV with the brands, families, models and types
-		of vehicles available in Oscaro.
-		
-		Call example:
-		
-		java -jar OscaroScrapper.jar --threads 8 --lang en
-		""";
+            Generates a CSV with the brands, families, models and types
+            of vehicles available in Oscaro.
+            
+            Call example:
+            
+            java -jar OscaroScrapper.jar --threads 8 --lang en
+            """;
 
     private static final Logger log = LogManager.getLogger(OscaroScrapperLauncher.class);
 
@@ -51,8 +51,7 @@ public class OscaroScrapperLauncher {
             cmd = parser.parse(options, args);
             numConsumers = validateParamThreads(cmd);
             lang = validateParamLang(cmd);
-        }
-        catch (ParseException | InvalidParameterException e) {
+        } catch (ParseException | InvalidParameterException e) {
             formatter.printHelp(HELP, options);
             log.error(e.getMessage());
             System.err.println(e.getMessage());
@@ -61,7 +60,7 @@ public class OscaroScrapperLauncher {
 
         BlockingQueue<BrandJob> queue = new LinkedBlockingQueue<>();
 
-        for (int i=0; i<numConsumers; i++){
+        for (int i = 0; i < numConsumers; i++) {
             log.info(">> Consumer {} launched.", i);
             new Thread(new OscaroScrapperConsumer(queue, lang)).start();
         }
@@ -80,7 +79,7 @@ public class OscaroScrapperLauncher {
             List<String> supportedLands = Arrays.asList("es", "fr", "pt");
             lang = cmd.getOptionValue(LONG_PARAM_LANG);
 
-            if(!supportedLands.contains(lang.toLowerCase())){
+            if (!supportedLands.contains(lang.toLowerCase())) {
                 throw new InvalidParameterException("--lang # Should be a supported language (es, fr, pt");
             }
         }
@@ -88,22 +87,22 @@ public class OscaroScrapperLauncher {
         return lang.toLowerCase();
     }
 
-    private static int validateParamThreads(CommandLine cmd) throws InvalidParameterException{
+    private static int validateParamThreads(CommandLine cmd) throws InvalidParameterException {
         int numThreads = DEFAULT_NUM_THREADS;
 
         if (cmd.hasOption(LONG_PARAM_THREADS) || cmd.hasOption(SHORT_PARAM_THREADS)) {
             String strNumThreads = cmd.getOptionValue(LONG_PARAM_THREADS);
-            if(strNumThreads != null && NumberUtil.isPositiveInt(strNumThreads)) {
+            if (strNumThreads != null && NumberUtil.isPositiveInt(strNumThreads)) {
                 numThreads = Integer.parseInt(strNumThreads);
 
-                if(numThreads == 0) {
+                if (numThreads == 0) {
                     throw new InvalidParameterException("--thread # Should be a positive integer bigger or equal than 1");
                 }
 
                 int cores = Runtime.getRuntime().availableProcessors();
                 log.debug("# cores: {}", cores);
 
-                if(numThreads > cores) {
+                if (numThreads > cores) {
                     throw new InvalidParameterException("--thread # Should be a positive integer smaller o equal than # of cores (" + cores + ")");
                 }
             }

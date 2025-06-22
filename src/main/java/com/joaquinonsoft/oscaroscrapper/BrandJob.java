@@ -13,7 +13,7 @@ public class BrandJob {
     private JobType type;
     private Brand brand;
 
-    BrandJob(JobType type){
+    BrandJob(JobType type) {
         this.type = type;
     }
 }

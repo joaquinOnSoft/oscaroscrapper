@@ -1,13 +1,13 @@
 package com.joaquinonsoft.oscaroscrapper.io;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CSVWriter
-{
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class CSVWriter {
     private BufferedWriter writer = null;
 
     private static final Logger log = LogManager.getLogger(CSVWriter.class);
@@ -24,12 +24,12 @@ public class CSVWriter
     public void write(String[] text) {
         StringBuilder sBuilder = new StringBuilder();
 
-        if(text != null) {
+        if (text != null) {
             int size = text.length;
-            for(int i=0; i<size; i++) {
+            for (int i = 0; i < size; i++) {
                 sBuilder.append(text[i]);
 
-                if(i != size -1) {
+                if (i != size - 1) {
                     sBuilder.append(",");
                 }
             }
@@ -50,7 +50,7 @@ public class CSVWriter
      * Close the CSV file
      */
     public void close() {
-        if(writer != null) {
+        if (writer != null) {
             try {
                 writer.flush();
                 writer.close();

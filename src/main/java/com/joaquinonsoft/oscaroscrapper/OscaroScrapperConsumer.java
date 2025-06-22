@@ -34,7 +34,7 @@ public class OscaroScrapperConsumer implements Runnable {
 
                 log.info("> Job type: {} ", job.getType());
 
-                if (job.getType() == JobType.KILL_JOB ) {
+                if (job.getType() == JobType.KILL_JOB) {
                     log.info("Consumer ending...");
                     return;
                 }
@@ -51,8 +51,8 @@ public class OscaroScrapperConsumer implements Runnable {
         }
     }
 
-    private void writeCSV(Brand brand){
-        if(brand != null) {
+    private void writeCSV(Brand brand) {
+        if (brand != null) {
             String filename = brand.getName() + "-" + lang + ".csv";
 
             log.info("Writing vehicles CSV  file: {}", filename);
@@ -61,9 +61,9 @@ public class OscaroScrapperConsumer implements Runnable {
 
             String[] header = new String[]{
                     "brandId", "brandName",
-                    "familyId","familyName",
+                    "familyId", "familyName",
                     "modelId", "modelName", "manufacturedFrom", "manufacturedTo",
-                    "typeId", "typeName", "typeFullName","energy"
+                    "typeId", "typeName", "typeFullName", "energy"
             };
 
             writer.write(header);

@@ -31,7 +31,7 @@ public class CSVMerger {
             try (Stream<Path> paths = Files.list(currentDir)) {
                 paths.filter(path -> path.toString().endsWith(".csv"))
                         .filter(path -> !path.equals(outputPath))  // Exclude output file
-                        .forEach(path -> isFirstFile.set(processFile(path, writer, isFirstFile.get())) );
+                        .forEach(path -> isFirstFile.set(processFile(path, writer, isFirstFile.get())));
             }
         }
     }
