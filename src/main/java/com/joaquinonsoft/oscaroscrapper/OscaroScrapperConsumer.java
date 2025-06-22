@@ -4,15 +4,14 @@ import com.joaquinonsoft.oscaroscrapper.dto.Brand;
 import com.joaquinonsoft.oscaroscrapper.dto.Family;
 import com.joaquinonsoft.oscaroscrapper.dto.Model;
 import com.joaquinonsoft.oscaroscrapper.dto.Type;
-import com.joaquinonsoft.oscaroscrapper.io.CSVMerger;
 import com.joaquinonsoft.oscaroscrapper.io.CSVWriter;
+import com.joaquinonsoft.oscaroscrapper.util.DateUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
 @AllArgsConstructor
@@ -37,13 +36,6 @@ public class OscaroScrapperConsumer implements Runnable {
 
                 if (job.getType() == JobType.KILL_JOB ) {
                     log.info("Consumer ending...");
-
-                    if (queue.isEmpty()) {
-                        String vehiclesFileName = "vehicles-" + lang + ".csv";
-                        log.info("Merging csv files into {}...", vehiclesFileName);
-                        CSVMerger.mergeCSVFiles(System.getProperty("user.dir"), vehiclesFileName);
-                    }
-                    
                     return;
                 }
 
@@ -56,8 +48,6 @@ public class OscaroScrapperConsumer implements Runnable {
         } catch (InterruptedException e) {
             log.error("Thread interrupted: ", e);
             Thread.currentThread().interrupt();
-        } catch (IOException e) {
-            log.error("Error writing merged CSV: ", e);
         }
     }
 
@@ -72,7 +62,7 @@ public class OscaroScrapperConsumer implements Runnable {
             String[] header = new String[]{
                     "brandId", "brandName",
                     "familyId","familyName",
-                    "modelId", "modelName",
+                    "modelId", "modelName", "manufacturedFrom", "manufacturedTo",
                     "typeId", "typeName", "typeFullName","energy"
             };
 
@@ -89,6 +79,8 @@ public class OscaroScrapperConsumer implements Runnable {
                                 family.getName(),
                                 model.getId(),
                                 model.getName(),
+                                DateUtil.dateToStr(model.getManufacturedFrom(), "MM/yyyy"),
+                                DateUtil.dateToStr(model.getManufacturedTo(), "MM/yyyy"),
                                 type.getId(),
                                 type.getName(),
                                 type.getFullName(),
