@@ -53,7 +53,9 @@ public class OscaroScrapperConsumer implements Runnable {
 
     private void writeCSV(Brand brand) {
         if (brand != null) {
-            String filename = brand.getName() + "-" + lang + ".csv";
+            String filename = brand.getName()
+                    .replace("Ë", "E") //CITROËN
+                    .replace(" ", "_") + "-" + lang + ".csv";
 
             log.info("Writing vehicles CSV  file: {}", filename);
 
