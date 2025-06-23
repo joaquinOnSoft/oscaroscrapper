@@ -39,3 +39,18 @@ ma-192,SEAT,fa-723,Leon,mo-1258,II (07/2005 - 05/2010),07/2005,05/2010,30441,SEA
 ma-192,SEAT,fa-723,Leon,mo-1258,II (07/2005 - 05/2010),07/2005,05/2010,17853,SEAT Leon,SEAT Leon II 2.0 TFSi 200cv,Gasolina
 ma-192,SEAT,fa-723,Leon,mo-1258,II (07/2005 - 05/2010),07/2005,05/2010,12212,SEAT Leon,SEAT Leon II 2.0 TDi 136cv,Diesel
 ```
+
+## How to execute the tool?
+
+Once you have compiled and generated the `.jar` file  you can execute it using these options:
+
+ - `--thread` or `-t`: Number of threads used to run the app. Default value: 4
+ - `--lang` or `-l`: Language code (ISO 2) used to recover the information. 
+    Valid values: (`es`, `fr` and `pt`). `es` is the default value    
+
+
+Example of execution:
+
+```console
+java -jar .\OscaroScrapper25.06.jar --thread 8 -lang fr
+```
