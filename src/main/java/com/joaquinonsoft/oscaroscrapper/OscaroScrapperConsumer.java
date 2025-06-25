@@ -4,14 +4,18 @@ import com.joaquinonsoft.oscaroscrapper.dto.Brand;
 import com.joaquinonsoft.oscaroscrapper.dto.Family;
 import com.joaquinonsoft.oscaroscrapper.dto.Model;
 import com.joaquinonsoft.oscaroscrapper.dto.Type;
-import com.joaquinonsoft.oscaroscrapper.io.CSVWriter;
 import com.joaquinonsoft.oscaroscrapper.util.DateUtil;
+import com.opencsv.CSVWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 @AllArgsConstructor
@@ -49,9 +53,12 @@ public class OscaroScrapperConsumer implements Runnable {
             log.error("Thread interrupted: ", e);
             Thread.currentThread().interrupt();
         }
+        catch (IOException e) {
+            log.error("I/O error: ", e);
+        }
     }
 
-    private void writeCSV(Brand brand) {
+    private void writeCSV(Brand brand) throws IOException {
         if (brand != null) {
             String filename = brand.getName()
                     .replace("Ë", "E") //CITROËN
@@ -59,7 +66,10 @@ public class OscaroScrapperConsumer implements Runnable {
 
             log.info("Writing vehicles CSV  file: {}", filename);
 
-            CSVWriter writer = new CSVWriter(filename);
+            //Writer writer, char separator, char quotechar, char escapechar, String lineEnd
+            CSVWriter csvWriter  = new CSVWriter( new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8));
+
+            List<String[]> data = new LinkedList<>();
 
             String[] header = new String[]{
                     "brandId", "brandName",
@@ -67,8 +77,7 @@ public class OscaroScrapperConsumer implements Runnable {
                     "modelId", "modelName", "manufacturedFrom", "manufacturedTo",
                     "typeId", "typeName", "typeFullName", "energy"
             };
-
-            writer.write(header);
+            data.add(header);
 
             String[] line;
             for (Family family : brand.getFamilies()) {
@@ -89,12 +98,13 @@ public class OscaroScrapperConsumer implements Runnable {
                                 type.getEnergy()
                         };
 
-                        writer.write(line);
+                        data.add(line);
                     }
                 }
             }
 
-            writer.close();
+            csvWriter.writeAll(data);
+            csvWriter.close();
         }
     }
 }

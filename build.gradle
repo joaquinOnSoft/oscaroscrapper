@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.joaquinonsoft.importssdui'
-version = '25.06'
+version = '25.06.24'
 
 repositories {
     mavenCentral()
@@ -32,6 +32,11 @@ jar {
 }
 
 dependencies {
+    // OpenCSV » 5.11.1
+    // A simple library for reading and writing CSV in Java
+    // https://mvnrepository.com/artifact/com.opencsv/opencsv
+    implementation 'com.opencsv:opencsv:5.11.1'
+
     // Project Lombok » 1.18.38
     // Lombok is a Java library that provides annotations to simplify Java development by automating
     // the generation of boilerplate code. Key features include automatic generation of getters, setters,
